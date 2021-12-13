@@ -38,37 +38,46 @@ Say you have a very simple web app with three pages, each page represented by a 
 You would do something like this:
 
 ```jsx
-import React from "react";
-import { Knave } from "knave";
+import React from 'react';
+import { Knave } from 'knave-react';
+import { render } from 'react-dom';
 
-const App = () => (
-  <Knave
-    installGlobalHandler
-    render={() => {
-      // Map path to component
-      const Component = {
-        "/": HomePage,
-        "/news": NewsPage,
-        "/about": AboutPage,
-      }[location.href] || NotFoundPage;
+function renderPage() {
+  // Map path to component
+  const Component =
+    {
+      '/': HomePage,
+      '/news': NewsPage,
+      '/about': AboutPage,
+    }[new URL(location.href).pathname] || NotFoundPage;
 
-      return (
-        <div>
-          {/* This navigation menu will be shared by all pages */}
-          <nav>
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/news">News</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/404">Broken link</a></li>
-            </ul>
-          </nav>
-          <Component />
-        </div>
-      );
-    }}
-  >
-    Loading...
+  return (
+    <div>
+      {/* This navigation menu will be shared by all pages */}
+      <nav>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/news">News</a>
+          </li>
+          <li>
+            <a href="/about">About</a>
+          </li>
+          <li>
+            <a href="/404">Broken link</a>
+          </li>
+        </ul>
+      </nav>
+      <Component />
+    </div>
+  );
+}
+
+const App = ({ children }) => (
+  <Knave installGlobalHandler render={renderPage}>
+    {children}
   </Knave>
 );
 
@@ -77,43 +86,40 @@ const NewsPage = () => <p>This is the news page</p>;
 const AboutPage = () => <p>This is the about page</p>;
 
 const NotFoundPage = () => <p>Not found</p>;
+
+render(<App>{renderPage()}</App>, document.getElementById('root'));
 ```
 
 A more involved scenario would look like this:
 
 ```jsx
-const App = () => (
-    <Knave
-        installGlobalHandler
-        // Render callback can return a Promise (so it can use async logic)
-        render={async () => {
-            try {
-                // findModuleNameForUrl is a hypothetical function for matching
-                // URLs with modules that default export a page component
-                const moduleName = findModuleNameForUrl(url);
+<Knave
+  installGlobalHandler
+  // Render callback can return a Promise (so it can use async logic)
+  render={async () => {
+    try {
+      // findModuleNameForUrl is a hypothetical function for matching
+      // URLs with modules that default export a page component
+      const moduleName = findModuleNameForUrl(url);
 
-                // All modern bundlers support something like this:
-                const pageModule = await import(`./pages/${moduleName}`);
+      // All modern bundlers support something like this:
+      const pageModule = await import(`./pages/${moduleName}`);
 
-                // Extract the page component and render it
-                const PageComponent = pageModule.default;
+      // Extract the page component and render it
+      const PageComponent = pageModule.default;
 
-                // getPageProps is a hypothetical function for fetching data
-                // needed for a page
-                const props = await getPageProps(url);
+      // getPageProps is a hypothetical function for fetching data
+      // needed for a page
+      const props = await getPageProps(url);
 
-                return <PageComponent {...props} />;
-            } catch (error) {
-                return <p>Could not load page: {error.message}</p>;
-            }
-        }}
-    >
-        {/* You could also render the initial page before calling
-            ReactDOM.render or ReactDOM.hydrate instead of showing
-            a loading state */}
-        Loading...
-    </Knave>
-);
+      return <PageComponent {...props} />;
+    } catch (error) {
+      return <p>Could not load page: {error.message}</p>;
+    }
+  }}
+>
+  {initialRender}
+</Knave>
 ```
 
 ### `navigate()`
