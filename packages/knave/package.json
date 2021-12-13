@@ -1,0 +1,30 @@
+{
+	"name": "knave",
+	"version": "1.0.0",
+	"description": "Complete framework-agonostic client-side navigation solution",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"type": "module",
+	"files": [
+		"dist/**/*"
+	],
+	"scripts": {
+		"build": "rm -rf dist && tsup src/index.ts --dts --format=esm --minify",
+		"dev": "tsup src/index.ts --dts --format=esm --watch",
+		"prepack": "pnpm build"
+	},
+	"keywords": [
+		"client-side navigation",
+		"history api",
+		"scroll restoration",
+		"navigation blocking",
+		"pushState",
+		"replaceState"
+	],
+	"author": "Fatih Aygün <cyco130@gmail.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"tsup": "^5.10.3",
+		"typescript": "^4.5.2"
+	}
+}

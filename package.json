@@ -1,0 +1,11 @@
+{
+	"private": true,
+	"name": "knave-root-workspace",
+	"version": "0.1.0",
+	"description": "Knave workspace root",
+	"scripts": {},
+	"author": "Fatih Aygün <cyco130@gmail.com>",
+	"license": "MIT",
+	"type": "module",
+	"repository": "https://github.com/cyco130/knave"
+}

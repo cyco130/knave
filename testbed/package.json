@@ -1,0 +1,24 @@
+{
+	"private": true,
+	"name": "knave-testbed",
+	"version": "0.0.0",
+	"description": "Knave testbed",
+	"scripts": {
+		"dev": "vite dev src",
+		"build": "vite build src --outDir=../dist --emptyOutDir",
+		"start": "vite preview --port=3000",
+		"test": "vitest run"
+	},
+	"type": "module",
+	"repository": "https://github.com/cyco130/knave",
+	"dependencies": {
+		"knave": "workspace:*"
+	},
+	"devDependencies": {
+		"puppeteer": "^13.0.0",
+		"start-server-and-test": "^1.14.0",
+		"typescript": "^4.5.2",
+		"vite": "2.7.1",
+		"vitest": "^0.0.76"
+	}
+}
