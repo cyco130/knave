@@ -18,9 +18,11 @@ npm install --save knave
 function initialize(renderFunction: (abortSignal: AbortSignal) => void | Promise<void>, installGlobalHandler?: boolean): Promise<void>
 ```
 
-You must call this function once in order to initialize the library and set the render function. Render function will be called for the first time after initialization. It will be called again every time client-side navigation is used. Its purpose is to render the content of the page synchronously or asynchronously. `abortSignal` can be used to detect aborted navigation for example when the user clicks on another link before the previous page has finished rendering.
+You must call this function once in order to initialize the library and set the render function. The render function will be called every time client-side navigation is used to render the contents of the page either synchronously or asynchronously. `abortSignal` can be used to detect aborted navigation for example when the user clicks on another link before the previous page has finished rendering.
 
 If `installGlobalHandler` is `true`, the library will install a global onclick handler which will try to use client-side navigation for all `a` and `area` elements. You can opt out of client-side navigation with `rel="external"`.
+
+The render function will not be called during initialization, the very first render must be done beforehand manually.
 
 ### `finalize()`
 

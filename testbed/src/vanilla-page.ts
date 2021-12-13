@@ -5,6 +5,8 @@ import {
 	removeNavigationBlocker,
 } from "knave";
 
+(window as any).framework = "vanilla";
+
 let blocker: (() => Promise<boolean>) | undefined;
 
 async function render() {
@@ -65,7 +67,8 @@ async function render() {
 }
 
 async function main() {
-	await initialize(render, true);
+	await render();
+	initialize(render, true);
 
 	addNavigationListener(
 		(nav) =>

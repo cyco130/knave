@@ -2,7 +2,7 @@
  * Initialize client-side navigation. This function must be called (only once) before any
  * navigation occurs.
  */
-export async function initialize(
+export function initialize(
 	/** Function to be called when a new page should render */
 	renderFunction: RenderFunction,
 	/** Whether to install a global click handler for a and area elements */
@@ -15,9 +15,6 @@ export async function initialize(
 	render = renderFunction;
 	currentUrl = location.href;
 	nextIndex = 0;
-	listeners = [];
-	blockers = [];
-	pending = undefined;
 	savedScrollRestoration = history.scrollRestoration;
 	history.scrollRestoration = "manual";
 
@@ -43,8 +40,6 @@ export async function initialize(
 		"",
 		location.href,
 	);
-
-	handleNavigation(undefined, false);
 }
 
 /** Finalize client-side navigation. You can call this function when you don't need client-side navigation anymore. */
@@ -52,6 +47,9 @@ export function finalize() {
 	removeEventListener("popstate", handleNavigation);
 	render = undefined;
 	history.scrollRestoration = savedScrollRestoration;
+	listeners = [];
+	blockers = [];
+	pending = undefined;
 }
 
 export interface MouseEventLike {
@@ -65,7 +63,7 @@ export interface MouseEventLike {
 	preventDefault(): void;
 }
 
-export function handleClick(e: MouseEventLike): void {
+function handleClick(e: MouseEventLike): void {
 	if (!shouldHandleClick(e)) return;
 
 	e.preventDefault();
@@ -73,7 +71,7 @@ export function handleClick(e: MouseEventLike): void {
 	navigate((e.target as any).href);
 }
 
-function shouldHandleClick(e: MouseEventLike): boolean {
+export function shouldHandleClick(e: MouseEventLike): boolean {
 	const t = e.target;
 
 	return (
@@ -229,6 +227,7 @@ async function handleNavigation(_: unknown, scroll = true): Promise<boolean> {
 
 	// Render new page
 	const controller = new AbortController();
+
 	const result = render!(controller.signal);
 
 	if (isPromise(result)) {
@@ -271,10 +270,12 @@ async function handleNavigation(_: unknown, scroll = true): Promise<boolean> {
 
 export type RenderFunction = (abortSignal: AbortSignal) => void | Promise<void>;
 
-export type NavigationListener = (navigation: {
+export type NavigationListener = (navigation: NavigationState) => void;
+
+export interface NavigationState {
 	currentUrl: string;
 	pendingUrl?: string;
-}) => void;
+}
 
 export function addNavigationListener(listener: NavigationListener): void {
 	listeners.push(listener);
@@ -288,7 +289,7 @@ export function addNavigationBlocker(
 	blocker: () => boolean | Promise<boolean>,
 ): void {
 	blockers.push(blocker);
-	if (blockers.length === 1) {
+	if (blockers.length === 1 && render) {
 		addEventListener("beforeunload", handleBeforeUnload);
 	}
 }

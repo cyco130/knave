@@ -8,12 +8,15 @@ async function main() {
 
 	if (path.startsWith("/vanilla")) {
 		await import("./vanilla-page");
+	} else if (path.startsWith("/react")) {
+		await import("./react-page");
 	} else {
 		container.innerHTML = `
 			<h1>Knave Testbed Main Page</h1>
 			<p>Available tests:</p>
 			<ul>
 				<li><a href="/vanilla">Vanilla</a></li>
+				<li><a href="/react">React</a></li>
 			</ul>
 		`;
 	}

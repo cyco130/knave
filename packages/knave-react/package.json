@@ -1,7 +1,7 @@
 {
-	"name": "knave",
+	"name": "knave-react",
 	"version": "1.0.0",
-	"description": "Framework-agnostic client-side navigation library",
+	"description": "Complete client-side navigation solution for React",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
@@ -9,11 +9,12 @@
 		"dist/**/*"
 	],
 	"scripts": {
-		"build": "rm -rf dist && tsup src/index.ts --dts --format=cjs,esm --minify",
-		"dev": "tsup src/index.ts --dts --format=esm --watch",
+		"build": "rm -rf dist && tsup src/index.tsx --dts --format=cjs,esm --minify",
+		"dev": "tsup src/index.tsx --dts --format=esm --watch . --watch ../knave/dist",
 		"prepack": "pnpm build"
 	},
 	"keywords": [
+		"react",
 		"client-side navigation",
 		"history api",
 		"scroll restoration",
@@ -23,7 +24,15 @@
 	],
 	"author": "Fatih Aygün <cyco130@gmail.com>",
 	"license": "MIT",
+	"peerDependencies": {
+		"react": "^16.8 | ^17 | ^18"
+	},
+	"dependencies": {
+		"@types/react": "^17.0.37",
+		"knave": "workspace:*"
+	},
 	"devDependencies": {
+		"react": "^17.0.2",
 		"tsup": "^5.10.3",
 		"typescript": "^4.5.2"
 	}
