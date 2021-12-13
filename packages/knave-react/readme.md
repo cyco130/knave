@@ -39,7 +39,7 @@ You would do something like this:
 
 ```jsx
 import React from "react";
-import { Router, Link } from "bare-routes";
+import { Knave } from "knave";
 
 const App = () => (
   <Knave
