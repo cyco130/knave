@@ -1,6 +1,8 @@
 # Knave
 
-Knave is a zero-dependency client-side navigation library which is framework-agnostic. It supports scroll restoration, navigation blocking, asynchronous rendering and optional global onclick handling.
+Knave is a MIT-licensed, zero-dependency client-side navigation library which is framework-agnostic. It supports scroll restoration, navigation blocking, asynchronous rendering and optional global onclick handling. See the [design](https://github.com/cyco130/knave/blob/main/design.md) document for the rational.
+
+Check out [`knave-react`](https://github.com/cyco130/knave/tree/main/packages/knave-react) if you want to use Knave with React.
 
 ## Installation
 
