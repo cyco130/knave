@@ -1,6 +1,6 @@
 {
 	"name": "knave-react",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Complete client-side navigation solution for React",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",

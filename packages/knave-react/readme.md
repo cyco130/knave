@@ -7,7 +7,7 @@ Check out [`knave`](https://github.com/cyco130/knave/tree/main/packages/knave-re
 ## Installation
 
 ```sh
-npm install --save knave
+npm install --save knave-react
 ```
 
 ## API
@@ -213,4 +213,15 @@ pendingStyle?: CSSProperties;
 //
 // Return true if the URL matches `href`
 onCompareUrls?(url: URL, href: URL): boolean;
+```
+
+### `KnaveServerSideProvider`
+
+The `KnaveServerSideProvider` component is needed to make `useCurrentLocation` and friends work in server-side rendering. You should wrap your entire application in this component:
+
+```tsx
+// Express example
+<KnaveServerSideProvider url={req.protocol + "://" + req.hostname + req.url}>
+  <App />
+</KnaveServerSideProvider>
 ```
