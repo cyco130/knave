@@ -168,7 +168,7 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 	onNavigationEnd?(completed: boolean): void;
 }
 
-const Link = forwardRef<HTMLAnchorElement, LinkProps>(
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
 	(
 		{
 			onNavigationStart,
