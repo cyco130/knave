@@ -1,7 +1,8 @@
 {
 	"name": "knave",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Framework-agnostic client-side navigation library",
+	"repository": "https://github.com/cyco130/knave",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
