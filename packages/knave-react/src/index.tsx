@@ -45,12 +45,18 @@ export const Knave: FC<KnaveProps> = ({
 
 			initialRef.current = false;
 
+			let rendered: ReactNode = null;
+
 			try {
-				const rendered = await render(signal);
-				setRendered(rendered);
+				rendered = await render(signal);
 			} catch (error) {
 				console.error(error);
-				setRendered(null);
+			}
+
+			if (signal.aborted) {
+				resolve();
+			} else {
+				setRendered(rendered);
 			}
 		});
 	}
