@@ -10,7 +10,7 @@
 		"dist/**/*"
 	],
 	"scripts": {
-		"build": "rm -rf dist && tsup src/index.ts --dts --format=cjs,esm --minify",
+		"build": "rm -rf dist && tsup src/index.ts --dts --format=cjs,esm",
 		"dev": "tsup src/index.ts --dts --format=esm --watch",
 		"prepack": "pnpm build"
 	},
