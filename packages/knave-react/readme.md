@@ -167,7 +167,7 @@ You can use `useNavigationBlocker` like this (`showFancyConfirmationDialog` can 
 // useCallback is necessary to prevent the function from being recreated on every render
 const showModal = useCallback(() => showFancyConfirmationDialog("Are you sure you want to leave?"), []);
 
-useNavigationBlocker(thereAreUnsavedChanges && );
+useNavigationBlocker(thereAreUnsavedChanges && showModal);
 ```
 
 ### `Link`
