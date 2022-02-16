@@ -1,6 +1,6 @@
 # knave-react
 
-**knave-react** is a complete MIT-licensed client-side navigation solution for React. It supports scroll restoration, navigation blocking, asynchronous rendering and optional global onclick handling. See the [design](https://github.com/cyco130/knave/blob/main/design.md) document for the rational.
+**knave-react** is a complete MIT-licensed client-side navigation solution for React. It supports scroll restoration, navigation blocking, asynchronous rendering and optional global onclick handling. See the [design](https://github.com/cyco130/knave/blob/main/design.md) document for the rationale.
 
 Check out [`knave`](https://github.com/cyco130/knave/tree/main/packages/knave) if you want to use Knave with other frameworks
 
