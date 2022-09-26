@@ -28,6 +28,7 @@ export { navigate };
 export interface KnaveProps {
 	render(abortSignal: AbortSignal): ReactNode | Promise<ReactNode>;
 	installGlobalHandler?: boolean;
+	children?: ReactNode;
 }
 
 export const Knave: FC<KnaveProps> = ({
@@ -83,10 +84,12 @@ export const Knave: FC<KnaveProps> = ({
 
 const KnaveContext = createContext<string | undefined>(undefined);
 
-export const KnaveServerSideProvider: FC<{ url: string }> = ({
-	url,
-	children,
-}) => <KnaveContext.Provider value={url}>{children}</KnaveContext.Provider>;
+export const KnaveServerSideProvider: FC<{
+	url: string;
+	children?: ReactNode;
+}> = ({ url, children }) => (
+	<KnaveContext.Provider value={url}>{children}</KnaveContext.Provider>
+);
 
 export function useCurrentLocation(): string {
 	const contextValue = useContext(KnaveContext);
@@ -155,6 +158,7 @@ export function useNavigationBlocker(
 
 interface KnaveContentProps {
 	onRenderComplete: () => void;
+	children?: ReactNode;
 }
 
 const KnaveContent: FC<KnaveContentProps> = ({

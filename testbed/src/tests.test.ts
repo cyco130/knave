@@ -21,14 +21,15 @@ afterAll(async () => {
 
 function defineTests(framework: string) {
 	describe(`${framework} tests`, () => {
-		const root = `http://localhost:3000/${framework}`;
+		const root = `http://localhost:5173/${framework}`;
 
 		it("should use client-side navigation", async () => {
 			await page.goto(root);
 			await page.waitForSelector(".loaded");
 
-			const link: ElementHandle<HTMLAnchorElement> =
-				(await page.waitForSelector("#link-1"))!;
+			const link = (await page.waitForSelector(
+				"#link-1",
+			)) as ElementHandle<HTMLAnchorElement>;
 
 			expect(link).toBeDefined();
 
@@ -51,8 +52,9 @@ function defineTests(framework: string) {
 			await page.goto(root);
 			await page.waitForSelector(".loaded");
 
-			const link: ElementHandle<HTMLAnchorElement> =
-				(await page.waitForSelector("#external-link"))!;
+			const link = (await page.waitForSelector(
+				"#external-link",
+			)) as ElementHandle<HTMLAnchorElement>;
 
 			expect(link).toBeDefined();
 
@@ -83,9 +85,9 @@ function defineTests(framework: string) {
 			);
 
 			// Click on a link
-			let link1: ElementHandle<HTMLAnchorElement> = (await page.waitForSelector(
+			let link1 = (await page.waitForSelector(
 				"#link-1",
-			))!;
+			)) as ElementHandle<HTMLAnchorElement>;
 
 			await link1.click();
 
@@ -110,7 +112,9 @@ function defineTests(framework: string) {
 			await page.waitForFunction(() => window.scrollY > 0);
 
 			// Click on the link again
-			link1 = (await page.waitForSelector("#link-1"))!;
+			link1 = (await page.waitForSelector(
+				"#link-1",
+			)) as ElementHandle<HTMLAnchorElement>;
 
 			await link1.click();
 
@@ -122,7 +126,9 @@ function defineTests(framework: string) {
 
 			// Click on another link
 			const link2: ElementHandle<HTMLAnchorElement> =
-				(await page.waitForSelector("#link-2"))!;
+				(await page.waitForSelector(
+					"#link-2",
+				)) as ElementHandle<HTMLAnchorElement>;
 
 			await link2.click();
 
@@ -149,7 +155,10 @@ function defineTests(framework: string) {
 			await page.waitForSelector(".loaded");
 
 			const slowLink: ElementHandle<HTMLAnchorElement> =
-				(await page.waitForSelector("#slow-link"))!;
+				(await page.waitForSelector(
+					"#slow-link",
+				)) as ElementHandle<HTMLAnchorElement>;
+
 			await slowLink.click();
 
 			await page.waitForFunction(
@@ -179,8 +188,10 @@ function defineTests(framework: string) {
 					(document.getElementById("relative-link") as HTMLAnchorElement).href,
 			);
 
-			const slowLink: ElementHandle<HTMLAnchorElement> =
-				(await page.waitForSelector("#slow-link"))!;
+			const slowLink = (await page.waitForSelector(
+				"#slow-link",
+			)) as ElementHandle<HTMLAnchorElement>;
+
 			await slowLink.click();
 
 			const pendingHref = await page.evaluate(
