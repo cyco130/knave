@@ -1,6 +1,6 @@
 {
 	"name": "knave-react",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Complete client-side navigation solution for React",
 	"repository": "https://github.com/cyco130/knave",
 	"main": "dist/index.js",

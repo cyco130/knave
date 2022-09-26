@@ -1,7 +1,6 @@
 {
 	"private": true,
 	"name": "knave-testbed",
-	"version": "0.0.0",
 	"description": "Knave testbed",
 	"scripts": {
 		"dev": "vite dev src",
