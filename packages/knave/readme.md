@@ -18,8 +18,8 @@ npm install --save knave
 
 ```ts
 function initialize(
-	renderFunction: (abortSignal: AbortSignal) => void | Promise<void>,
-	installGlobalHandler?: boolean,
+  renderFunction: (abortSignal: AbortSignal) => void | Promise<void>,
+  installGlobalHandler?: boolean,
 ): Promise<void>;
 ```
 
@@ -39,9 +39,9 @@ You may call this function to perform cleanup if you don't need client-side navi
 function navigate(to: string, options?: NavigationOptions): Promise<boolean>;
 
 interface NavigationOptions {
-	replace?: boolean;
-	scroll?: boolean;
-	data?: any;
+  replace?: boolean;
+  scroll?: boolean;
+  data?: any;
 }
 ```
 
@@ -56,8 +56,8 @@ function addNavigationListener(listener: NavigationListener): void;
 function removeNavigationListener(listener: NavigationListener): void;
 
 type NavigationListener = (navigation: {
-	currentUrl: string;
-	pendingUrl?: string;
+  currentUrl: string;
+  pendingUrl?: string;
 }) => void;
 ```
 
@@ -68,7 +68,7 @@ With these pair of functions you can add or remove listeners that will be called
 ```ts
 function addNavigationBlocker(blocker: () => boolean | Promise<boolean>): void;
 function removeNavigationBlocker(
-	blocker: () => boolean | Promise<boolean>,
+  blocker: () => boolean | Promise<boolean>,
 ): void;
 ```
 

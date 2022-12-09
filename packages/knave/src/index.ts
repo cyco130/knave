@@ -104,7 +104,9 @@ export async function navigate(
 
 	if (url.origin !== location.origin) {
 		location.href = url.href;
-		return new Promise(() => {});
+		return new Promise(() => {
+			/* Do nothing */
+		});
 	}
 
 	const { replace, scroll, data } = options || {};
@@ -311,7 +313,9 @@ async function callNavigationBlockers(): Promise<boolean> {
 
 		try {
 			result = await blocker();
-		} catch {}
+		} catch {
+			/* Ignore */
+		}
 
 		if (!result) return false;
 	}

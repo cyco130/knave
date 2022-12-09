@@ -1,10 +1,21 @@
 {
-	"private": true,
-	"name": "knave-root-workspace",
-	"description": "Knave workspace root",
-	"scripts": {},
-	"author": "Fatih Aygün <cyco130@gmail.com>",
-	"license": "MIT",
-	"type": "module",
-	"repository": "https://github.com/cyco130/knave"
+  "private": true,
+  "name": "knave-root-workspace",
+  "description": "Knave workspace root",
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter \"./packages/*\" run dev",
+    "build": "pnpm -r --filter \"./packages/*\" run build",
+    "test": "pnpm run test:prettier && pnpm run test:packages && pnpm run ci",
+    "ci": "pnpm -r --stream --workspace-concurrency=1 run ci",
+    "test:packages": "pnpm -r --stream --filter \"./packages/*\" run test",
+    "test:prettier": "prettier --check --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml'",
+    "format": "prettier --write --ignore-path .gitignore --ignore-unknown . '!pnpm-lock.yaml'"
+  },
+  "author": "Fatih Aygün <cyco130@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "repository": "https://github.com/cyco130/knave",
+  "devDependencies": {
+    "prettier": "^2.8.1"
+  }
 }

@@ -1,26 +1,27 @@
 {
-	"private": true,
-	"name": "knave-testbed",
-	"description": "Knave testbed",
-	"scripts": {
-		"dev": "vite dev src",
-		"build": "vite build src --outDir=../dist --emptyOutDir",
-		"start": "vite preview --port=3000",
-		"test": "vitest run"
-	},
-	"type": "module",
-	"repository": "https://github.com/cyco130/knave",
-	"dependencies": {
-		"@types/react": "^18.0.21",
-		"@types/react-dom": "^18.0.6",
-		"knave": "workspace:*",
-		"knave-react": "workspace:*",
-		"puppeteer": "^18.0.5",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"start-server-and-test": "^1.14.0",
-		"typescript": "^4.8.3",
-		"vite": "3.1.3",
-		"vitest": "^0.23.4"
-	}
+  "private": true,
+  "name": "knave-testbed",
+  "description": "Knave testbed",
+  "scripts": {
+    "dev": "vite dev src",
+    "build": "vite build src --outDir=../dist --emptyOutDir",
+    "start": "vite preview --port=3000",
+    "test": "vitest run",
+    "ci": "pnpm build && start-server-and-test start http://localhost:3000 test"
+  },
+  "type": "module",
+  "repository": "https://github.com/cyco130/knave",
+  "dependencies": {
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "knave": "workspace:*",
+    "knave-react": "workspace:*",
+    "puppeteer": "^18.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "start-server-and-test": "^1.14.0",
+    "typescript": "^4.8.3",
+    "vite": "3.1.3",
+    "vitest": "^0.23.4"
+  }
 }

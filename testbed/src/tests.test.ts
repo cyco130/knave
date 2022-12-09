@@ -21,7 +21,7 @@ afterAll(async () => {
 
 function defineTests(framework: string) {
 	describe(`${framework} tests`, () => {
-		const root = `http://localhost:5173/${framework}`;
+		const root = `http://localhost:3000/${framework}`;
 
 		it("should use client-side navigation", async () => {
 			await page.goto(root);

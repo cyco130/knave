@@ -40,7 +40,8 @@ export const Knave: FC<KnaveProps> = ({
 	const initialRef = useRef(true);
 	const [rendered, setRendered] = useState<ReactNode>(children);
 
-	function doRender(signal: AbortSignal): Promise<void> {
+	async function doRender(signal: AbortSignal): Promise<void> {
+		// eslint-disable-next-line no-async-promise-executor
 		return new Promise(async (resolve) => {
 			resolveRef.current = resolve;
 
@@ -65,10 +66,12 @@ export const Knave: FC<KnaveProps> = ({
 	useEffect(() => {
 		initialize(doRender, installGlobalHandler);
 		return finalize;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<KnaveContext.Provider
+			// eslint-disable-next-line ssr-friendly/no-dom-globals-in-react-fc
 			value={initialRef.current ? location.href : undefined}
 		>
 			<KnaveContent
