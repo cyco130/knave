@@ -14,8 +14,13 @@ npm install --save knave
 
 ### `initialize()`
 
+> ⚠️ This branch is being actively developed. Check the [stable branch](https://github.com/cyco130/knave/tree/stable/packages/knave) for production use.
+
 ```ts
-function initialize(renderFunction: (abortSignal: AbortSignal) => void | Promise<void>, installGlobalHandler?: boolean): Promise<void>
+function initialize(
+	renderFunction: (abortSignal: AbortSignal) => void | Promise<void>,
+	installGlobalHandler?: boolean,
+): Promise<void>;
 ```
 
 You must call this function once in order to initialize the library and set the render function. The render function will be called every time client-side navigation is used to render the contents of the page either synchronously or asynchronously. `abortSignal` can be used to detect aborted navigation for example when the user clicks on another link before the previous page has finished rendering.
@@ -34,9 +39,9 @@ You may call this function to perform cleanup if you don't need client-side navi
 function navigate(to: string, options?: NavigationOptions): Promise<boolean>;
 
 interface NavigationOptions {
-  replace?: boolean;
-  scroll?: boolean;
-  data?: any;
+	replace?: boolean;
+	scroll?: boolean;
+	data?: any;
 }
 ```
 
@@ -51,8 +56,8 @@ function addNavigationListener(listener: NavigationListener): void;
 function removeNavigationListener(listener: NavigationListener): void;
 
 type NavigationListener = (navigation: {
-    currentUrl: string;
-    pendingUrl?: string;
+	currentUrl: string;
+	pendingUrl?: string;
 }) => void;
 ```
 
@@ -62,7 +67,9 @@ With these pair of functions you can add or remove listeners that will be called
 
 ```ts
 function addNavigationBlocker(blocker: () => boolean | Promise<boolean>): void;
-function removeNavigationBlocker(blocker: () => boolean | Promise<boolean>): void;
+function removeNavigationBlocker(
+	blocker: () => boolean | Promise<boolean>,
+): void;
 ```
 
 With these pair of functions you can add or remove navigation blockers. Navigation blocking is useful for notifying the user that there is unsaved data that may be lost. A navigation blocker is a function that returns `true` if the navigation should be blocked and `false` if it should be allowed. It can be asynchronous. Typically it would show the user a confirmation dialog and return according to the user's choice. `knave` will also install an `onbeforeunload` handler when a navigation blocker is added. Blockers are called in the order they were added and the first blocker that returns `false` will block the navigation.

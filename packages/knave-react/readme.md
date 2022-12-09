@@ -1,5 +1,7 @@
 # knave-react
 
+> ⚠️ This branch is being actively developed. Check the [stable branch](https://github.com/cyco130/knave/tree/stable/packages/knave-react) for production use.
+
 **knave-react** is a complete MIT-licensed client-side navigation solution for React. It supports scroll restoration, navigation blocking, asynchronous rendering and optional global onclick handling. See the [design](https://github.com/cyco130/knave/blob/main/design.md) document for the rationale.
 
 Check out [`knave`](https://github.com/cyco130/knave/tree/main/packages/knave) if you want to use Knave with other frameworks
@@ -14,12 +16,12 @@ npm install --save knave-react
 
 ### `Knave`
 
-This is the main client-side navigation component, it takes the  following props:
+This is the main client-side navigation component, it takes the following props:
 
 ```ts
 export interface KnaveProps {
-  render(abortSignal: AbortSignal): ReactNode | Promise<ReactNode>;
-  installGlobalHandler?: boolean;
+	render(abortSignal: AbortSignal): ReactNode | Promise<ReactNode>;
+	installGlobalHandler?: boolean;
 }
 ```
 
@@ -38,47 +40,47 @@ Say you have a very simple web app with three pages, each page represented by a 
 You would do something like this:
 
 ```jsx
-import React from 'react';
-import { Knave } from 'knave-react';
-import { render } from 'react-dom';
+import React from "react";
+import { Knave } from "knave-react";
+import { render } from "react-dom";
 
 function renderPage() {
-  // Map path to component
-  const Component =
-    {
-      '/': HomePage,
-      '/news': NewsPage,
-      '/about': AboutPage,
-    }[new URL(location.href).pathname] || NotFoundPage;
+	// Map path to component
+	const Component =
+		{
+			"/": HomePage,
+			"/news": NewsPage,
+			"/about": AboutPage,
+		}[new URL(location.href).pathname] || NotFoundPage;
 
-  return (
-    <div>
-      {/* This navigation menu will be shared by all pages */}
-      <nav>
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/news">News</a>
-          </li>
-          <li>
-            <a href="/about">About</a>
-          </li>
-          <li>
-            <a href="/404">Broken link</a>
-          </li>
-        </ul>
-      </nav>
-      <Component />
-    </div>
-  );
+	return (
+		<div>
+			{/* This navigation menu will be shared by all pages */}
+			<nav>
+				<ul>
+					<li>
+						<a href="/">Home</a>
+					</li>
+					<li>
+						<a href="/news">News</a>
+					</li>
+					<li>
+						<a href="/about">About</a>
+					</li>
+					<li>
+						<a href="/404">Broken link</a>
+					</li>
+				</ul>
+			</nav>
+			<Component />
+		</div>
+	);
 }
 
 const App = ({ children }) => (
-  <Knave installGlobalHandler render={renderPage}>
-    {children}
-  </Knave>
+	<Knave installGlobalHandler render={renderPage}>
+		{children}
+	</Knave>
 );
 
 const HomePage = () => <p>This is the home page</p>;
@@ -87,38 +89,38 @@ const AboutPage = () => <p>This is the about page</p>;
 
 const NotFoundPage = () => <p>Not found</p>;
 
-render(<App>{renderPage()}</App>, document.getElementById('root'));
+render(<App>{renderPage()}</App>, document.getElementById("root"));
 ```
 
 A more involved scenario would look like this:
 
 ```jsx
 <Knave
-  installGlobalHandler
-  // Render callback can return a Promise (so it can use async logic)
-  render={async () => {
-    try {
-      // findModuleNameForUrl is a hypothetical function for matching
-      // URLs with modules that default export a page component
-      const moduleName = findModuleNameForUrl(url);
+	installGlobalHandler
+	// Render callback can return a Promise (so it can use async logic)
+	render={async () => {
+		try {
+			// findModuleNameForUrl is a hypothetical function for matching
+			// URLs with modules that default export a page component
+			const moduleName = findModuleNameForUrl(url);
 
-      // All modern bundlers support something like this:
-      const pageModule = await import(`./pages/${moduleName}`);
+			// All modern bundlers support something like this:
+			const pageModule = await import(`./pages/${moduleName}`);
 
-      // Extract the page component and render it
-      const PageComponent = pageModule.default;
+			// Extract the page component and render it
+			const PageComponent = pageModule.default;
 
-      // getPageProps is a hypothetical function for fetching data
-      // needed for a page
-      const props = await getPageProps(url);
+			// getPageProps is a hypothetical function for fetching data
+			// needed for a page
+			const props = await getPageProps(url);
 
-      return <PageComponent {...props} />;
-    } catch (error) {
-      return <p>Could not load page: {error.message}</p>;
-    }
-  }}
+			return <PageComponent {...props} />;
+		} catch (error) {
+			return <p>Could not load page: {error.message}</p>;
+		}
+	}}
 >
-  {initialRender}
+	{initialRender}
 </Knave>
 ```
 
@@ -128,9 +130,9 @@ A more involved scenario would look like this:
 function navigate(to: string, options?: NavigationOptions): Promise<boolean>;
 
 interface NavigationOptions {
-  replace?: boolean;
-  scroll?: boolean;
-  data?: any;
+	replace?: boolean;
+	scroll?: boolean;
+	data?: any;
 }
 ```
 
@@ -146,8 +148,8 @@ function usePendingLocation(): string | undefined;
 function useNavigationState(): NavigationState;
 
 interface NavigationState {
-    currentUrl: string;
-    pendingUrl?: string;
+	currentUrl: string;
+	pendingUrl?: string;
 }
 ```
 
@@ -156,7 +158,9 @@ These custom hooks can be used to rerender a component when the current URL or t
 ### `useNavigationBlocker()`
 
 ```ts
-function useNavigationBlocker(blocker?: boolean | (() => boolean | Promise<boolean>)): void;
+function useNavigationBlocker(
+	blocker?: boolean | (() => boolean | Promise<boolean>),
+): void;
 ```
 
 This custom hook can be used to register navigation blockers. Navigation blocking is useful for notifying the user that there is unsaved data that may be lost. A navigation blocker is a function that returns `true` if the navigation should be blocked and `false` if it should be allowed. It can be asynchronous. Typically it would show the user a confirmation dialog and return according to the user's choice. `knave` will also install an `onbeforeunload` handler when a navigation blocker is added. Blockers are called in the order they were added and the first blocker that returns `false` will block the navigation.
@@ -165,7 +169,10 @@ You can use `useNavigationBlocker` like this (`showFancyConfirmationDialog` can 
 
 ```ts
 // useCallback is necessary to prevent the function from being recreated on every render
-const showModal = useCallback(() => showFancyConfirmationDialog("Are you sure you want to leave?"), []);
+const showModal = useCallback(
+	() => showFancyConfirmationDialog("Are you sure you want to leave?"),
+	[],
+);
 
 useNavigationBlocker(thereAreUnsavedChanges && showModal);
 ```
@@ -222,6 +229,6 @@ The `KnaveServerSideProvider` component is needed to make `useCurrentLocation` a
 ```tsx
 // Express example
 <KnaveServerSideProvider url={req.protocol + "://" + req.hostname + req.url}>
-  <App />
+	<App />
 </KnaveServerSideProvider>
 ```
